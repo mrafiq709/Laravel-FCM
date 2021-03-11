@@ -87,6 +87,10 @@ In your `.env` file, add the server key and the secret key for the Firebase Clou
 ```php
 FCM_SERVER_KEY=my_secret_server_key
 FCM_SENDER_ID=my_secret_sender_id
+
+// For Multiple Server Keye and Sender ID
+FCM_SERVER_KEY_2=my_secret_server_key_2
+FCM_SENDER_ID_2=my_secret_sender_id_2
 ```
 
 To get these keys, you must create a new application on the [firebase cloud messaging console](https://console.firebase.google.com/).
@@ -124,6 +128,10 @@ $optionBuilder->setTimeToLive(60*20);
 $notificationBuilder = new PayloadNotificationBuilder('my title');
 $notificationBuilder->setBody('Hello world')
 				    ->setSound('default');
+				    
+// For image, add the setImage() method like below
+$notificationBuilder->setBody('Hello world')->setImage('image_url')
+				    ->setSound('default');
 
 $dataBuilder = new PayloadDataBuilder();
 $dataBuilder->addData(['a_data' => 'my_data']);
@@ -134,7 +142,12 @@ $data = $dataBuilder->build();
 
 $token = "a_registration_from_your_database";
 
+// If you do have only one sender and server key, then this is default. And It will use
+// FCM_SERVER_KEY, FCM_SENDER_ID from env
 $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
+
+// And you have multiple sender ID and server Key, then use like below
+$downstreamResponse = FCM::sendTo($tokens, $option, $notification, $data, env('FCM_SERVER_KEY_2'), env('FCM_SENDER_ID_2'));
 
 $downstreamResponse->numberSuccess();
 $downstreamResponse->numberFailure();

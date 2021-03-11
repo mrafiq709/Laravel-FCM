@@ -10,6 +10,9 @@ Laravel-FCM is an easy to use package working with both Laravel and Lumen for se
 It currently **only supports HTTP protocol** for :
 
 - sending a downstream message to one or multiple devices
+- Single Sender Id and Server Key
+- Multiple Sender Id and Server Key
+- Send Image
 - managing groups and sending message to a group
 - sending topics messages
 
